@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Display a list of currently running processes with process hierarchy
+
+# Use ps command to list processes, including those without a TTY
+# Display in a user-friendly format using ps options
+# Show process hierarchy using pstree
+
+ps -a -x -u -f

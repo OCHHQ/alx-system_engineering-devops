@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Display "To infinity and beyond" indefinitely with a 2-second delay
+
+# Function to handle SIGTERM signal
+terminate() {
+    echo "I am invincible!!!"
+    exit 0
+}
+
+# Trap SIGTERM signal and call terminate function
+trap terminate SIGTERM
+
+# Infinite loop to display the message with a 2-second delay
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
