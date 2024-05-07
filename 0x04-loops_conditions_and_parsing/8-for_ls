@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Loop through the files in the current directory
+
+list=$(ls)
+for iin $list; do
+	echo "$i" | cut -d '_' -f2
+done
