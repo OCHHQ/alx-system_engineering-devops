@@ -1,0 +1,22 @@
+What is a server?
+A server is a device, virtual device, or computer program that provides services, resources, or data to other devices or programs over a network. In this infrastructure, the server is a single machine that hosts all the components of the web infrastructure.
+What is the role of the domain name?
+The domain name (foobar.com) is used to identify the website and direct users to the correct server. It acts as a human-readable address that is easier to remember than the server's IP address.
+What type of DNS record is www in www.foobar.com?
+The "www" in www.foobar.com is a CNAME (Canonical Name) record, which is a type of DNS (Domain Name System) record that maps an alias or alternate name to the actual name of a server or host.
+What is the role of the web server?
+The web server (Nginx) receives the user's request and serves the website's files (HTML, CSS, images, etc.) to the user's browser. It acts as an entry point for the website and handles HTTP requests and responses.
+What is the role of the application server?
+The application server runs the application code (your code base) that generates dynamic content for the website. It acts as an intermediary between the web server and the database, processing requests and generating responses.
+What is the role of the database?
+The database (MySQL) stores and manages the website's data, providing a centralized repository for information that is used by the application server to generate dynamic content.
+What is the server using to communicate with the computer of the user requesting the website?
+The server is using HTTP (Hypertext Transfer Protocol) to communicate with the user's browser, which sends requests and receives responses. HTTP is a protocol that allows devices to communicate with each other over the internet.
+
+Single Point of Failure (SPOF)
+The infrastructure has a Single Point of Failure (SPOF) because there is only one server that handles all the requests. If this server goes down or becomes unavailable, the entire website becomes inaccessible, resulting in downtime and potential loss of revenue.
+Downtime during maintenance
+The infrastructure requires downtime during maintenance, such as deploying new code or updating the web server. This is because the web server needs to be restarted, causing the website to be unavailable for a period. This can lead to lost productivity, revenue, and user engagement.
+Scalability limitations
+The infrastructure cannot scale if there is too much incoming traffic. The single server can become overwhelmed, leading to slow response times, errors, and even crashes. This means that the website is not able to handle sudden spikes in traffic, such as during a marketing campaign or a viral event.
+These issues highlight the importance of building a more robust and resilient infrastructure, such as using load balancers, distributed servers, and cloud-based services to ensure high availability, scalability, and reliability.
