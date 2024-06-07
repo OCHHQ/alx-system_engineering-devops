@@ -1,0 +1,41 @@
+# Distributed Web Infrastructure Design
+
+![Distributed Web Infrastructure](https://docs.google.com/document/d/1KwQ7xKHB_Md7n_22OEgT2kRmEOG2hO-DqiIkIeE3vZM/edit?usp=sharing)
+
+# Components
+
+- **Load Balancer (HAProxy)**
+  - **Purpose**: Distributes incoming traffic across multiple servers.
+  - **Algorithm**: Round Robin - evenly distributes requests sequentially.
+
+- **Web Server (Nginx)**
+  - **Purpose**: Handles HTTP requests and serves static content.
+
+- **Application Server**
+  - **Purpose**: Runs the business logic of the application.
+
+- **Database (MySQL)**
+  - **Primary-Replica Cluster**: Ensures high availability and load distribution.
+  - **Primary Node**: Handles all write operations and propagates changes.
+  - **Replica Node**: Handles read operations.
+
+# Issues with This Infrastructure
+
+- **SPOF (Single Point of Failure)**
+  - Load Balancer and Primary Database Node can be single points of failure.
+
+- **Security Issues**
+  - No Firewall: Vulnerable to unauthorized access.
+  - No HTTPS: Data transmitted is not encrypted.
+
+- **No Monitoring**
+  - Lack of monitoring tools to track performance and detect issues.
+
+# Enhancements
+
+- Implement redundant load balancers.
+- Set up automated failover for the database.
+- Implement firewalls.
+- Use HTTPS for secure communication.
+- Deploy monitoring tools.
+
