@@ -1,0 +1,49 @@
+# Secured and Monitored Web Infrastructure Design
+
+![Secured and Monitored Web Infrastructure](https://drive.google.com/file/d/1YNUKWMRweYxt5bVfcot4e-ePAI5oWbmh/view?usp=sharing)
+
+## Components
+
+- **Load Balancer (HAProxy)**
+- **Web Servers (Nginx)**
+- **Application Servers**
+- **Database (MySQL)**
+
+## Additional Elements for Security and Monitoring
+
+- **3 Firewalls**: Protect different segments of the infrastructure.
+- **SSL Certificate**: Ensures encrypted traffic over HTTPS for secure communication.
+- **3 Monitoring Clients**: Collect data for performance and security monitoring.
+
+## Explanation of Components
+
+1. **Firewalls**:
+   - **Purpose**: Protect different segments of the infrastructure by filtering traffic based on predefined security rules.
+   - **Placement**: 
+     - Perimeter: Protects the entire network.
+     - Between Load Balancer and Web Servers.
+     - Between Web Servers and Database Servers.
+
+2. **HTTPS**:
+   - **Purpose**: Ensures encrypted traffic between users and the server, protecting sensitive data from being intercepted.
+   - **Importance**: Provides confidentiality, data integrity, and authentication.
+
+3. **Monitoring**:
+   - **Purpose**: Track system performance, detect anomalies, and ensure optimal operation.
+   - **Data Collection**: Collect metrics and logs from servers for analysis and alerting.
+   - **Monitoring Web Server QPS**: Configure the monitoring client to track HTTP requests processed by the web server using tools like Prometheus and Grafana.
+
+## Infrastructure Issues
+
+1. **Terminating SSL at the Load Balancer**:
+   - **Issue**: Unencrypted traffic between the load balancer and internal servers.
+   - **Solution**: Use end-to-end encryption.
+
+2. **Single MySQL Server for Writes**:
+   - **Issue**: Single point of failure for write operations.
+   - **Solution**: Implement MySQL replication with automated failover.
+
+3. **Homogeneous Servers**:
+   - **Issue**: Resource contention and scaling issues.
+   - **Solution**: Separate roles of servers for optimal performance and easier scaling.
+
