@@ -1,0 +1,50 @@
+# Scale Up Web Infrastructure Design
+
+![Scale Up Web Infrastructure](https://drive.google.com/file/d/1iV50Q9siiTRNXjWVm84ZyXX23t51zu2q/view?usp=sharing)
+
+## Components
+
+- **Load Balancers (HAProxy)**: Clustered for high availability.
+- **Web Servers (Nginx)**: Dedicated servers for handling HTTP requests and serving static content.
+- **Application Servers**: Dedicated servers for executing application logic.
+- **Database Servers (MySQL)**: Primary-Replica setup for managing data.
+
+## Additional Elements
+
+- **1 additional server**: Added to increase capacity and redundancy.
+- **Clustered Load Balancer (HAProxy)**: Ensures high availability and load distribution.
+- **Dedicated servers for Web Server, Application Server, and Database**: Improved performance, scalability, and manageability.
+
+## Explanation of Components
+
+1. **Load Balancers (HAProxy)**:
+   - **Purpose**: Distribute traffic to multiple web servers to balance the load and provide high availability.
+   - **Clustered Setup**: Ensures that if one load balancer fails, another can take over without disrupting service.
+   - **Distribution Algorithm**: Configured with round-robin, least connections, or IP hash. Round-robin is a common choice.
+
+2. **Web Servers (Nginx)**:
+   - **Purpose**: Serve static content and handle HTTP requests.
+   - **Dedicated Servers**: By isolating web servers, we can scale them independently based on the demand for static content.
+
+3. **Application Servers**:
+   - **Purpose**: Execute application logic and process dynamic requests.
+   - **Dedicated Servers**: Allows for independent scaling of the application layer to handle varying loads.
+
+4. **Database Servers (MySQL)**:
+   - **Purpose**: Store and manage data.
+   - **Primary-Replica Setup**: Primary server handles write operations, and replicas handle read operations to balance the load and ensure data availability.
+
+## Infrastructure Issues
+
+1. **SSL Termination at Load Balancer**:
+   - **Issue**: Unencrypted traffic between the load balancer and internal servers can be a security risk.
+   - **Solution**: Use end-to-end encryption to ensure traffic remains encrypted throughout its journey.
+
+2. **Single MySQL Server for Writes**:
+   - **Issue**: Single point of failure for write operations.
+   - **Solution**: Implement MySQL replication with automated failover.
+
+3. **Homogeneous Servers**:
+   - **Issue**: Resource contention and scaling issues.
+   - **Solution**: Separate roles of servers for optimal performance and easier scaling.
+
