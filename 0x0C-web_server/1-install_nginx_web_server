@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# This script install and configures Nginx to return "Hello World"
+# This script installs and configures Nginx to return "Hello World"
 
+# Update package lists and install Nginx
 apt-get update -y
+apt-get install nginx -y
 
-apt-get install  nginx -y
+# Allow HTTP traffic through UFW
+ufw allow 'Nginx HTTP'
 
-sudo ufw allow "Nginx HTTP"
+# Create a simple index.html file with "Hello World"
+echo 'Hello World' > /var/www/html/index.html
 
-sh -c "echo 'Hello World' > /var/www/html/index.html"
-
-#Restart ngnix 
-service ngnix restart
+# Restart Nginx
+service nginx restart
