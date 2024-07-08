@@ -18,7 +18,7 @@ echo "Hello World!" | tee /var/www/html/index.html
 echo "Ceci n'est pas une page" | tee /var/www/html/404.html
 
 # Use sed to configure Nginx to redirect /redirect_me to another page and set up a custom 404 error page
-sed -i '/^\s*location \/ {/a\\n    location \/redirect_me {\n        return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\n    }\n\n    error_page 404 \/404.html;' /etc/nginx/sites-available/default
+sed -i '/^\s*location \/ {/a\\n    location \/redirect_me {\n        return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\n    }\n\n    error_page 404 \/404.html;\n    location \/404.html {\n        root \/var\/www\/html;\n    }\n' /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the changes
-service nginx reload
+systemctl restart nginx
