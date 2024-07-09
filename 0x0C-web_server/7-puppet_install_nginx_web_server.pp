@@ -1,3 +1,5 @@
+# This Puppet script installs and configures Nginx to return "Hello World!" at its root and sets up a 301 redirect for /redirect_me.
+
 # Ensure the Nginx package is installed
 package { 'nginx':
   ensure => installed,
