@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Script to login to server-02 (web-02)
+
+# Start the SSH agent
+eval $(ssh-agent -s)
+
+# Add the SSH private key
+ssh-add ~/.ssh/school
+
+# Connect to the remote server
+ssh ubuntu@54.1i57.167.38
