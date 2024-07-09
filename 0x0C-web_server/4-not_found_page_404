@@ -1,24 +1,52 @@
 #!/usr/bin/env bash
-# This script installs and configures Nginx to return "Hello World" and set up a 301 redirection from /redirect_me
+# This script installs and configures Nginx to have a custom 404 page
+# that contains the string "Ceci n'est pas une page."
 
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-# Update package lists and install Nginx
-apt-get update -y
-apt-get install nginx -y
+# Check if nginx is installed
+if [ ! -e /usr/sbin/nginx ]; then
+    apt-get update
+    apt-get -y install nginx
+    echo "Nginx installed successfully."
+else
+    echo "Nginx is already installed."
+fi
 
-# Allow HTTP traffic through UFW
-ufw allow 'Nginx HTTP'
+# Ensure that the directory is present.
+if [ ! -e /var/www/html ]; then
+    mkdir -p /var/www/html
+fi
 
-# Create a simple index.html file with "Hello World"
-echo "Hello World!" | tee /var/www/html/index.html
+# Prepare the custom file
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+echo "Hello World!" > /var/www/html/index.html
 
-# Create a custom 404 page
-echo "Ceci n'est pas une page" | tee /var/www/html/404.html
+# Configure Nginx
+cat <<EOF > /etc/nginx/sites-available/default
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-# Use sed to configure Nginx to redirect /redirect_me to another page and set up a custom 404 error page
-sed -i '/^\s*location \/ {/a\\n    location \/redirect_me {\n        return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\n    }\n\n    error_page 404 \/404.html;\n    location \/404.html {\n        root \/var\/www\/html;\n    }\n' /etc/nginx/sites-available/default
+    root /var/www/html;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    location /redirect_me {
+        return 301 https://youtube.com/;
+    }
+
+    error_page 404 /404.html;
+
+    location = /404.html {
+        internal;
+    }
+}
+EOF
 
 # Restart Nginx to apply the changes
-systemctl restart nginx
+service nginx restart
+echo "Nginx configured with custom 404 page successfully."
