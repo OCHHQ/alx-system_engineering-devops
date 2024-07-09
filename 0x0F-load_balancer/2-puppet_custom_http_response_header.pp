@@ -1,4 +1,4 @@
-# 2-puppet_custom_http_response_header.pp
+# Configure Nginx with a custom HTTP header (X-Served-By)
 
 # Ensure Nginx is installed
 package { 'nginx':
@@ -12,11 +12,11 @@ file { '/etc/nginx/sites-available/default':
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By $hostname;
+    add_header X-Served-By $HOSTNAME;
     root /var/www/html;
     index index.html index.htm index.nginx-debian.html;
     server_name _;
-    
+
     error_page 404 /404.html;
     location = /404.html {
         internal;
@@ -24,7 +24,7 @@ server {
         default_type text/html;
         return 404 'Ceci n\'est pas une page';
     }
-    
+
     location / {
         try_files $uri $uri/ =404;
     }
