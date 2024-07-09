@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # 2-puppet_custom_http_response_header.pp
 
 # Ensure Nginx is installed
