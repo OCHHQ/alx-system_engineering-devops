@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script configures localhost and facebook.com IP resolutions
+# Resolve host names to IP addresses
 
 hosts_file="/etc/hosts"
 localhost_entry="127.0.0.2 localhost"
@@ -9,18 +9,15 @@ facebook_entry="8.8.8.8 facebook.com"
 cp "$hosts_file" "$hosts_file.bak"
 
 # Update hosts file with the specified localhost configuration
-if grep -q "^127.0.0.1" "$hosts_file"; then
-    sed -i "s/^127.0.0.1.*/$localhost_entry/" "$hosts_file"
+if grep -q "^127.0.0.1" "$hosts_file.bak"; then
+    sed -i "/^127.0.0.1/s/^127.0.0.1.*/$localhost_entry/" "$hosts_file"
 else
     echo "$localhost_entry" >> "$hosts_file"
 fi
 
 # Update hosts file with the specified facebook.com configuration
-if grep -q "^157.240.11.35" "$hosts_file"; then
+if grep -q "^157.240.11.35" "$hosts_file.bak"; then
     sed -i "s/^157.240.11.35.*/$facebook_entry/" "$hosts_file"
 else
     echo "$facebook_entry" >> "$hosts_file"
 fi
-
-# Print success message
-echo "IP addresses have been changed successfully."
