@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# This script installs and configures Nginx to return "Hello World" and set up a 301 redirection from /redirect_me
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Update package lists and install Nginx
+apt-get update -y
+apt-get install nginx -y
+
+# Allow HTTP traffic through UFW
+ufw allow 'Nginx HTTP'
+
+# Create a simple index.html file with "Hello World"
+echo "Hello World!" | tee /var/www/html/index.html
+
+# Use sed to configure Nginx to redirect /redirect_me to another page
+sed -i '/^\s*location \/ {/a\\n    location /redirect_me {\n        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n    }' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply the changes
+service nginx reload

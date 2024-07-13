@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Configure Nginx so that its HTTP response contains a custom header (on web-01 and web-02)
+
+# Check if nginx is installed
+if [ ! -e /usr/sbin/nginx ]; then
+    apt-get update
+    apt-get -y install nginx
+    echo "Nginx installed successfully."
+else
+    echo "Nginx is already installed."
+fi
+
+# Ensure that the directory is present.
+if [ ! -d /var/www/html ]; then
+    mkdir -p /var/www/html
+fi
+
+# Prepare the custom files
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+echo 'Hello World!' > /var/www/html/index.html
+
+# Create the Nginx configuration
+cat << EOF > /etc/nginx/sites-available/default
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By \$HOSTNAME;
+    root /var/www/html;
+    index index.html index.htm;
+
+    location /redirect_me {
+        return 301 (link unavailable);
+    }
+
+    error_page 404 /404.html;
+    location /404.html {
+        internal;
+    }
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Test the Nginx configuration
+if nginx -t; then
+    systemctl restart nginx
+    echo "Nginx configured with custom 404 page successfully."
+else
+    echo "Nginx configuration test failed. Please check your configuration."
+    exit 1
+fi
