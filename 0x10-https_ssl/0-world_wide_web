@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-# Accept one or two arguments
+#accpt two args
 
 if [ $# -eq 1 ]; then
-    dom="www.$1 lb-01.$1 web-01.$1 web-02.$1"
-elif [ $# -eq 2 ]; then
-    dom="$2.$1"
+    dom="www.$1 Ib-01.$1 web-01.$1 web-02.$1"
 else
-    echo "Usage: $0 <domain> [<subdomain>]"
-    exit 1
+    dom="$2.$1"
 fi
 
-dig $dom | awk '/ANSWER SECTION:/ { getline; split($1, b, ","); print "The subdomain", b[1], "is a", $4, "record and points to", $5 }'
+dig $dom | awk '/ANSWER SECTION:/{getline; split($1,b,","); print "The subdomain", b[1], "is a", $4, "record and point to", $5}'
