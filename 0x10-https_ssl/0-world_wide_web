@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+#accpt two args
 
 if [ $# -eq 1 ]; then
-    dom="www.$1 lb-01.$1 web-01.$1 web-02.$1"
+    dom="www.$1 Ib-01.$1 web-01.$1 web-02.$1"
 else
     dom="$2.$1"
 fi
 
-dig $dom | awk '/ANSWER SECTION:/{getline; split($1,b,","); subdomain=b[1]; sub(".*\.", "", subdomain); print "The subdomain", subdomain, "is a", $4, "record and point to", $5}'
+dig $dom | awk '/ANSWER SECTION:/{getline; split($1,b,","); print "The subdomain", b[1], "is a", $4, "record and point to", $5}'
