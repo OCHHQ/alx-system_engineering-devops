@@ -1,35 +1,27 @@
 #!/usr/bin/python3
-
 """
 Python script to export employee TODO list data to JSON format
 """
 
 import json
 import requests
-import sys
+from sys import argv
 
-
-def fetch_data(user_id):
-    """Fetch user and tasks data from API"""
+if __name__ == '__main__':
     url = 'https://jsonplaceholder.typicode.com/'
-    user = requests.get(f'{url}users/{user_id}').json()
+    user_id = argv[1]
+    user_info = requests.get(f'{url}users/{user_id}').json()
+    username = user_info['username']
     tasks = requests.get(f'{url}todos?userId={user_id}').json()
-    return user['username'], [
+
+    task_list = [
         {
-            "task": task['title'],
-            "completed": task['completed'],
-            "username": user['username']
+            'task': task['title'],
+            'completed': task['completed'],
+            'username': username
         }
         for task in tasks
     ]
 
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(1)
-
-    user_id = sys.argv[1]
-    username, tasks = fetch_data(user_id)
-
-with open(f'{user_id}.json', 'w', encoding='utf-8') as file:
-    json.dump({user_id: tasks}, file, indent=4)
+    with open(f'{user_id}.json', 'w') as f:
+        json.dump({user_id: task_list}, f)
