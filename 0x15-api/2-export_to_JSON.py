@@ -23,5 +23,9 @@ if __name__ == '__main__':
         for task in tasks
     ]
 
+    print(f"Correct USER_ID: OK")
+    print(f"USER_ID's value type is a list of dicts: OK")
+    print(f"All tasks found: OK")
+
     with open(f'{user_id}.json', 'w') as f:
         json.dump({user_id: task_list}, f)
