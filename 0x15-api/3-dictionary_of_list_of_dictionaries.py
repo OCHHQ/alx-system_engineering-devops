@@ -1,35 +1,42 @@
 #!/usr/bin/python3
-"""
-Python script that returns information using a REST API
-"""
-
-
-import json
+"""Write all employee data in json format to a file"""
+from json import dump
 import requests
-from sys import argv
 
 
-if __name__ == '__main__':
-    url = 'https://jsonplaceholder.typicode.com/'
-    users = requests.get('{}users'.format(url)).json()
-    user_dict = {}
+def fetch_employee_data():
+    """Get all task to be done by all employees"""
+    employee_url = "https://jsonplaceholder.typicode.com/users/"
+    todo_url = "https://jsonplaceholder.typicode.com/todos/"
+    employees = requests.get(employee_url).json()
+    todos = requests.get(todo_url).json()
+    return employees, todos
 
-    for user in users:
-        user_id = user['id']
-        username = user['username']
-        tasks = requests.get('{}todos?userId={}'.format(url, user_id)).json()
-        formatted_tasks = [
-            {
-                'task': task['title'],
-                'completed': task['completed'],
-                'username': username
-            }
-            for task in tasks
-        ]
-        user_dict[user_id] = formatted_tasks
 
-    print("All users found: OK")
-    print("User ID and Tasks output: OK")
+def write_json(employees, todos):
+    employee_dict = {}
 
-    with open('todo_all_employees.json', 'w') as f:
-        json.dump(user_dict, f)
+    # Create a lookup dictionary for employee usernames
+    user_lookup = {
+            employee['id']: employee['username'] for employee in employees
+    }
+
+    for task in todos:
+        user_id = task.get("userId")
+        if user_id not in employee_dict:
+            employee_dict[user_id] = []
+
+        todo = {
+            "username": user_lookup.get(user_id),
+            "task": task.get("title"),
+            "completed": task.get("completed")
+        }
+        employee_dict[user_id].append(todo)
+
+    with open("todo_all_employees.json", "w") as json_file:
+        dump(employee_dict, json_file, indent=4)
+
+
+if __name__ == "__main__":
+    employees, todos = fetch_employee_data()
+    write_json(employees, todos)
