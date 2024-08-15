@@ -1,8 +1,5 @@
-# 0-strace_is_your_friend.pp
-file { '/etc/wordpress/config-127.0.0.1.php':
-  ensure  => file,
-  content => template('wordpress/config.erb'),
-  owner   => 'www-data',
-  group   => 'www-data',
-  mode    => '0644',
+exec { 'wp_fixer':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/',
+  onlyif  => 'grep -q phpp /var/www/html/wp-settings.php',
 }
