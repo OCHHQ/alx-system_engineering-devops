@@ -2,7 +2,7 @@
 
 ## Incident Overview
 
-On [Date], our password manager service experienced a significant outage due to a database overload. The outage started at 10:01 GMT+1 and ended at 11:45 GMT+1, lasting a total of 1 hour and 44 minutes. During this time, the application was completely unavailable for 30 minutes (from 10:30 GMT+1 to 11:00 GMT+1). Approximately 500 users were affected.
+On 16-08-2024, our password manager service experienced a significant outage due to a database overload. The outage started at 10:01 GMT+1 and ended at 11:45 GMT+1, lasting a total of 1 hour and 44 minutes. During this time, the application was completely unavailable for 30 minutes (from 10:30 GMT+1 to 11:00 GMT+1). Approximately 500 users were affected.
 
 ## Root Cause Analysis
 
