@@ -1,8 +1,9 @@
+#!/usr/bin/env bash
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    # Use the IP of your server or your domain name
+    # Uise the IP of your server or your domain name
     server_name 54.90.19.2;
 
     # Default location block
